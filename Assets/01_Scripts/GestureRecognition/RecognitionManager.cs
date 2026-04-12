@@ -59,7 +59,9 @@ public class RecognitionManager : MonoBehaviour
         _templateModeButton.image.color = _state == RecognizerState.TEMPLATE ? Color.green : Color.white;
         _recognitionModeButton.image.color = _state == RecognizerState.RECOGNITION ? Color.green : Color.white;
         _reviewTemplates.image.color = _state == RecognizerState.TEMPLATE_REVIEW ? Color.green : Color.white;
+
         _templateName.gameObject.SetActive(_state == RecognizerState.TEMPLATE);
+
         _recognitionResult?.gameObject.SetActive(_state == RecognizerState.RECOGNITION);
 
         _drawable.gameObject.SetActive(state != RecognizerState.TEMPLATE_REVIEW);
@@ -77,9 +79,7 @@ public class RecognitionManager : MonoBehaviour
         }
         else
         {
-            //  (string, float) result = _dollarOneRecognizer.DoRecognition(points, 64, _templates.GetTemplates());
-            (string, float) result = _currentRecognizer.DoRecognition(points, 64,
-                _templates.RawTemplates);
+            (string, float) result = _currentRecognizer.DoRecognition(points, 64, _templates.ProceedTemplates);
             string resultText = "";
             resultText = $"Recognized: {result.Item1}, Score: {result.Item2}";
 

@@ -26,29 +26,31 @@ public class Recognizer
 
                 if (proceedDistance + distance >= incrementValue)
                 {
-                    while (proceedDistance + distance >= incrementValue)
+                while (proceedDistance + distance >= incrementValue && newPoints.Count < n)
+                {
+                    float t = Math.Min(Math.Max((incrementValue - proceedDistance) / distance, 0.0f), 1.0f);
+                    if (float.IsNaN(t)) t = 0.5f;
+
+                    float approximatedX =
+                        previousDollarPoint.Point.x +
+                        t * (currentDollarPoint.Point.x - previousDollarPoint.Point.x);
+                    float approximatedY =
+                        previousDollarPoint.Point.y +
+                        t * (currentDollarPoint.Point.y - previousDollarPoint.Point.y);
+
+                    DollarPoint approximatedDollarPoint = new DollarPoint()
                     {
-                        float t = Math.Min(Math.Max((incrementValue - proceedDistance) / distance, 0.0f), 1.0f);
-                        if (float.IsNaN(t)) t = 0.5f;
+                        Point = new Vector2(approximatedX, approximatedY),
+                    };
 
-                        float approximatedX =
-                            previousDollarPoint.Point.x +
-                            t * (currentDollarPoint.Point.x - previousDollarPoint.Point.x);
-                        float approximatedY =
-                            previousDollarPoint.Point.y +
-                            t * (currentDollarPoint.Point.y - previousDollarPoint.Point.y);
-                        DollarPoint approximatedDollarPoint = new DollarPoint()
-                        {
-                            Point = new Vector2(approximatedX, approximatedY),
-                        };
-                        newPoints.Add(approximatedDollarPoint);
+                    newPoints.Add(approximatedDollarPoint);
 
-                        distance = proceedDistance + distance - incrementValue;
-                        proceedDistance = 0;
-                        previousDollarPoint = newPoints[newPoints.Count - 1];
-                    }
+                    distance = proceedDistance + distance - incrementValue;
+                    proceedDistance = 0;
+                    previousDollarPoint = approximatedDollarPoint;
+                }
 
-                    proceedDistance = distance;
+                proceedDistance = distance;
                 }
                 else
                 {
@@ -57,7 +59,7 @@ public class Recognizer
             
         }
 
-        if (proceedDistance > 0)
+        if (newPoints.Count == n - 1)
         {
             newPoints.Add(points[points.Length - 1]);
         }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class ReviewDataUI : MonoBehaviour
     GestureData[] gestures;
     int index = 0;
     int page = 0;
+
+    bool goToLastOnLoad = false;
 
     private void Awake()
     {
@@ -28,7 +31,17 @@ public class ReviewDataUI : MonoBehaviour
     void OnData(GestureData[] data)
     {
         gestures = data;
-        index = 0;
+
+        if (goToLastOnLoad)
+        {
+            index = gestures.Length - 1;
+            goToLastOnLoad = false;
+        }
+        else
+        {
+            index = 0;
+        }
+
         Show();
     }
 
@@ -43,6 +56,7 @@ public class ReviewDataUI : MonoBehaviour
             if (page > 0)
             {
                 page--;
+                goToLastOnLoad = true;
                 apiClient.GetGestures(page);
                 return;
             }
@@ -71,6 +85,29 @@ public class ReviewDataUI : MonoBehaviour
 
     void Show()
     {
-        display.Draw(gestures[index]);
+        if (gestures == null || gestures.Length == 0 || index < 0 || index >= gestures.Length)
+        {
+            Debug.LogWarning($"[Review] Invalid state Page={page} Index={index}");
+            return;
+        }
+
+        var g = gestures[index];
+
+        string user = string.IsNullOrEmpty(g.userId) ? "unknown" : g.userId;
+        string version = string.IsNullOrEmpty(g.version) ? "unknown" : g.version;
+
+        string formattedDate = "invalid";
+        if (!string.IsNullOrEmpty(g.createdAt))
+        {
+            DateTime date;
+            if (DateTime.TryParse(g.createdAt, out date))
+            {
+                formattedDate = date.ToLocalTime().ToString("dd/MM HH:mm");
+            }
+        }
+
+        Debug.Log($"[Review] Page={page} Index={index}/{gestures.Length} Label={g.label} Points={g.numPoints} User={user} Version={version} Date={formattedDate}");
+
+        display.Draw(g);
     }
 }

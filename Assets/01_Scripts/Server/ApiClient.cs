@@ -10,6 +10,10 @@ public class GestureData
     public string label;
     public Vector2[] points;
     public int numPoints;
+
+    public string userId;
+    public string createdAt;
+    public string version;
 }
 
 [Serializable]

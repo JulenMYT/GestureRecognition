@@ -199,7 +199,6 @@ namespace FreeDraw
                 previous_drag_position = Vector2.zero;
                 no_drawing_on_current_drag = false;
                 ResetCanvas(drawable_texture);
-                Debug.Log(_strokeIndex);
                 _strokeIndex = 0;
             }
 

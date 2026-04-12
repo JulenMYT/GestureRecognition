@@ -129,12 +129,7 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
         float bestDistance = float.MaxValue;
         RecognitionManager.GestureTemplate bestTemplate = new RecognitionManager.GestureTemplate();
 
-        //Should be stored in proceesed, but for testing purpose we use RawPoints
-        IEnumerable<RecognitionManager.GestureTemplate> proceedGestures = gestureTemplates.Select(template =>
-            new RecognitionManager.GestureTemplate() {Points = Normalize(template.Points, points.Length), Name = template.Name});
-
-        foreach (RecognitionManager.GestureTemplate gestureTemplate in proceedGestures.Where(template =>
-            template.Points.Length == points.Length))
+        foreach (RecognitionManager.GestureTemplate gestureTemplate in gestureTemplates)
         {
             float distance = DistanceAtBestAngle(points, gestureTemplate, -theta, theta, deltaTheta, angle);
             if (distance < bestDistance)
@@ -189,7 +184,6 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
     private float PathDistance(List<DollarPoint> points, DollarPoint[] templatePoints)
     {
         float distance = 0;
-
         for (int i = 0; i < points.Count; i++)
         {
             distance += Vector2.Distance(points[i].Point, templatePoints[i].Point);
