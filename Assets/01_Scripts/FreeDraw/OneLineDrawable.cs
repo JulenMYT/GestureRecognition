@@ -27,7 +27,6 @@ public class OneLineDrawable : MonoBehaviour
 
     List<DollarPoint> _drawPoints = new List<DollarPoint>();
 
-
     void Update()
     {
         HandleInput();
@@ -94,7 +93,6 @@ public class OneLineDrawable : MonoBehaviour
             no_drawing_on_current_drag = false;
         }
     }
-
 
     public void PenBrush(Vector2 world_point)
     {

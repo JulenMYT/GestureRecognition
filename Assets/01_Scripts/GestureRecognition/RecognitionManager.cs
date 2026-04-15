@@ -27,21 +27,9 @@ public class RecognitionManager : MonoBehaviour
         TEMPLATE_REVIEW
     }
 
-    [Serializable]
-    public struct GestureTemplate
-    {
-        public string Name;
-        public DollarPoint[] Points;
 
-        public GestureTemplate(string templateName, DollarPoint[] preparePoints)
-        {
-            Name = templateName;
-            Points = preparePoints;
-        }
-    }
 
     private string TemplateName => _templateName.text;
-
 
     private void Start()
     {
@@ -83,9 +71,7 @@ public class RecognitionManager : MonoBehaviour
             string resultText = "";
             resultText = $"Recognized: {result.Item1}, Score: {result.Item2}";
 
-
             _recognitionResult.text = resultText;
-            Debug.Log(resultText);
         }
     }
 

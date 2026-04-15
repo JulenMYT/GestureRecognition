@@ -7,5 +7,8 @@ public interface IRecognizer
         DollarOneRecognizer.Step step = DollarOneRecognizer.Step.TRANSLATED);
 
     public (string, float) DoRecognition(DollarPoint[] points, int n,
-        List<RecognitionManager.GestureTemplate> gestureTemplates);
+        List<GestureTemplate> gestureTemplates);
+
+    public (string, float) DoRecognitionWithLabel(DollarPoint[] points, int n,
+    List<GestureTemplate> gestureTemplates, string label);
 }

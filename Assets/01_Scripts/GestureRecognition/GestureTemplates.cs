@@ -5,6 +5,19 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
+public struct GestureTemplate
+{
+    public string Name;
+    public DollarPoint[] Points;
+
+    public GestureTemplate(string templateName, DollarPoint[] preparePoints)
+    {
+        Name = templateName;
+        Points = preparePoints;
+    }
+}
+
+[Serializable]
 public class GestureTemplates
 {
     private static GestureTemplates instance;
@@ -21,10 +34,10 @@ public class GestureTemplates
     }
 
 
-    public List<RecognitionManager.GestureTemplate> RawTemplates = new List<RecognitionManager.GestureTemplate>();
-    public List<RecognitionManager.GestureTemplate> ProceedTemplates = new List<RecognitionManager.GestureTemplate>();
+    public List<GestureTemplate> RawTemplates = new List<GestureTemplate>();
+    public List<GestureTemplate> ProceedTemplates = new List<GestureTemplate>();
 
-    public List<RecognitionManager.GestureTemplate> GetTemplates()
+    public List<GestureTemplate> GetTemplates()
     {
         return ProceedTemplates;
     }
@@ -35,28 +48,44 @@ public class GestureTemplates
         RawTemplates.RemoveAt(indexToRemove);
     }
 
-    public RecognitionManager.GestureTemplate[] GetRawTemplatesByName(string name)
+    public GestureTemplate[] GetRawTemplatesByName(string name)
     {
         return RawTemplates.Where(template => template.Name == name).ToArray();
     }
 
     public void Save()
     {
-        string path = Application.persistentDataPath + "/SavedTemplates.json";
-        string potion = JsonUtility.ToJson(this);
-        File.WriteAllText(path, potion);
+        //string path = Application.persistentDataPath + "/SavedTemplates.json";
+        //string potion = JsonUtility.ToJson(this);
+        //File.WriteAllText(path, potion);
     }
 
     private void Load()
     {
-        string path = Application.persistentDataPath + "/SavedTemplates.json";
-        if (File.Exists(path))
+        string defaultPath = Application.streamingAssetsPath + "/SavedTemplates.json";
+
+        if (File.Exists(defaultPath))
         {
-            GestureTemplates data = JsonUtility.FromJson<GestureTemplates>(File.ReadAllText(path));
-            RawTemplates.Clear();
-            RawTemplates.AddRange(data.RawTemplates);
-            ProceedTemplates.Clear();
-            ProceedTemplates.AddRange(data.ProceedTemplates);
+            LoadFromPath(defaultPath);
         }
+
+        //string persistentPath = Application.persistentDataPath + "/SavedTemplates.json";
+
+        //if (File.Exists(persistentPath))
+        //{
+        //    LoadFromPath(persistentPath);
+        //    return;
+        //}
+    }
+
+    private void LoadFromPath(string path)
+    {
+        var data = JsonUtility.FromJson<GestureTemplates>(File.ReadAllText(path));
+
+        RawTemplates.Clear();
+        RawTemplates.AddRange(data.RawTemplates);
+
+        ProceedTemplates.Clear();
+        ProceedTemplates.AddRange(data.ProceedTemplates);
     }
 }

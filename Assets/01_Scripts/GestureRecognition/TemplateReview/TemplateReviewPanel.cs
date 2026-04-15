@@ -61,7 +61,7 @@ public class TemplateReviewPanel : MonoBehaviour
     private void UpdateState()
     {
         UpdateTemplates();
-        RecognitionManager.GestureTemplate[] candidates = _templates.GetRawTemplatesByName(_currentTemplateName);
+        GestureTemplate[] candidates = _templates.GetRawTemplatesByName(_currentTemplateName);
         if (candidates.Length > 0)
         {
             _displayTemplate.Draw(candidates[_currentTemplateIndex], (DollarOneRecognizer.Step) _step);
@@ -109,9 +109,9 @@ public class TemplateReviewPanel : MonoBehaviour
 
     private void RemoveTemplate()
     {
-        IEnumerable<RecognitionManager.GestureTemplate> templatesByName = _templates.ProceedTemplates
+        IEnumerable<GestureTemplate> templatesByName = _templates.ProceedTemplates
             .Where(template => template.Name == _currentTemplateName).ToList();
-        RecognitionManager.GestureTemplate templateToRemove = templatesByName
+        GestureTemplate templateToRemove = templatesByName
             .ElementAt(_currentTemplateIndex);
         int indexToRemove = _templates.ProceedTemplates.IndexOf(templateToRemove);
         _templates.RemoveAtIndex(indexToRemove);

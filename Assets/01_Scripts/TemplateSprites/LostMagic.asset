@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca42c6ad3a716bf4093ddae946c9944c, type: 3}
+  m_Name: LostMagic
+  m_EditorClassIdentifier: 
+  collectionName: LostMagic
+  templates:
+  - {fileID: 11400000, guid: f7ccef788083d1945a88f3432258ca43, type: 2}
+  - {fileID: 11400000, guid: e063e8e907e0c554c9f90f1b8f4fbcbe, type: 2}
+  - {fileID: 11400000, guid: 8ae5fdb026cf7b945ba35e8976af91ab, type: 2}
+  - {fileID: 11400000, guid: 975e0987f6c494044a6bc782589c6ce6, type: 2}
+  - {fileID: 11400000, guid: 06085d995100bb04cb3b77157028c17a, type: 2}
+  - {fileID: 11400000, guid: 0b8f8471b577e84479b4c0a7cb0edc92, type: 2}
+  - {fileID: 11400000, guid: b058cc30c16309043a08c7679ddf87e9, type: 2}
+  - {fileID: 11400000, guid: 98869b3d5d5720b4c999fe8061597eaf, type: 2}
+  - {fileID: 11400000, guid: a3c206ec3f49dab49b0b881a09f1575c, type: 2}
+  - {fileID: 11400000, guid: 93eeae8c37a1e99419931dd957f98c71, type: 2}
+  - {fileID: 11400000, guid: 288c34465e8e65d48ac1e48f6cfb2daf, type: 2}
+  - {fileID: 11400000, guid: 5006988c975fb7f4d9948fab7dd43e53, type: 2}
+  - {fileID: 11400000, guid: 1e037906248920148aebc0cdba4961c0, type: 2}
+  - {fileID: 11400000, guid: 3ad4dc869e873cd4d9078b6432c500b9, type: 2}
+  - {fileID: 11400000, guid: 1b0a6b999100b594ba0ce4f79996f7dd, type: 2}
+  - {fileID: 11400000, guid: a0f0c6dbba54cf84fb35f335ddd0e860, type: 2}
+  - {fileID: 11400000, guid: ac04427851ebbb5479c18175886dfc2f, type: 2}
+  - {fileID: 11400000, guid: 1801f05a25ccfc840a20c1596ce59bbb, type: 2}

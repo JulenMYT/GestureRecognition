@@ -13,7 +13,7 @@ public class DisplayTemplate : MonoBehaviour
     private Color32[] cur_colors;
     private readonly DollarOneRecognizer _dollarOneRecognizer = new DollarOneRecognizer();
 
-    public void Draw(RecognitionManager.GestureTemplate gestureTemplate, DollarOneRecognizer.Step step)
+    public void Draw(GestureTemplate gestureTemplate, DollarOneRecognizer.Step step)
     {
         Clear();
         cur_colors = drawable_texture.GetPixels32();

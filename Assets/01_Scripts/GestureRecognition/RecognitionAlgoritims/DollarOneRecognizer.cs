@@ -42,13 +42,20 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
     }
 
     public (string, float) DoRecognition(DollarPoint[] points, int n,
-        List<RecognitionManager.GestureTemplate> gestureTemplates)
+        List<GestureTemplate> gestureTemplates)
     {
         DollarPoint[] preparedPoints = Normalize(points, n);
         float angle = 0.5f * (-1 + Mathf.Sqrt(5));
         return Recognize(preparedPoints, gestureTemplates, 250, angle);
     }
 
+    public (string, float) DoRecognitionWithLabel(DollarPoint[] points, int n,
+    List<GestureTemplate> gestureTemplates, string label)
+    {
+        DollarPoint[] preparedPoints = Normalize(points, n);
+        float angle = 0.5f * (-1 + Mathf.Sqrt(5));
+        return Recognize(preparedPoints, gestureTemplates, 250, angle, label);
+    }
 
     private DollarPoint[] RotateToZero(DollarPoint[] points)
     {
@@ -120,16 +127,19 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
 
     private (string, float) Recognize(
         DollarPoint[] points,
-        List<RecognitionManager.GestureTemplate> gestureTemplates,
+        List<GestureTemplate> gestureTemplates,
         float size,
-        float angle)
+        float angle,
+        string label = "")
     {
         float theta = 45;
         float deltaTheta = 2;
         float bestDistance = float.MaxValue;
-        RecognitionManager.GestureTemplate bestTemplate = new RecognitionManager.GestureTemplate();
-
-        foreach (RecognitionManager.GestureTemplate gestureTemplate in gestureTemplates)
+        GestureTemplate bestTemplate = new GestureTemplate();
+        List<GestureTemplate> filteredTemplates = string.IsNullOrEmpty(label)
+            ? gestureTemplates
+            : gestureTemplates.Where(template => template.Name == label).ToList();
+        foreach (GestureTemplate gestureTemplate in filteredTemplates)
         {
             float distance = DistanceAtBestAngle(points, gestureTemplate, -theta, theta, deltaTheta, angle);
             if (distance < bestDistance)
@@ -143,7 +153,7 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
         return ((string, float)) (bestTemplate.Name, score);
     }
 
-    private float DistanceAtBestAngle(DollarPoint[] points, RecognitionManager.GestureTemplate template, float thetaA,
+    private float DistanceAtBestAngle(DollarPoint[] points, GestureTemplate template, float thetaA,
         float thetaB,
         float deltaTheta, float angle)
     {
@@ -175,7 +185,7 @@ public class DollarOneRecognizer : Recognizer, IRecognizer
         return Mathf.Min(firstDistance, secondDistance);
     }
 
-    private float DistanceAtAngle(DollarPoint[] points, RecognitionManager.GestureTemplate template, float angle)
+    private float DistanceAtAngle(DollarPoint[] points, GestureTemplate template, float angle)
     {
         List<DollarPoint> newPoints = RotateBy(points, angle);
         return PathDistance(newPoints, template.Points);
