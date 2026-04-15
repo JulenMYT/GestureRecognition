@@ -55,32 +55,31 @@ public class GestureTemplates
 
     public void Save()
     {
-        //string path = Application.persistentDataPath + "/SavedTemplates.json";
-        //string potion = JsonUtility.ToJson(this);
-        //File.WriteAllText(path, potion);
+#if UNITY_EDITOR
+        string path = Application.dataPath + "/Resources/SavedTemplates.json";
+        string json = JsonUtility.ToJson(this, true);
+        File.WriteAllText(path, json);
+        UnityEditor.AssetDatabase.Refresh();
+#endif
     }
 
     private void Load()
     {
-        string defaultPath = Application.streamingAssetsPath + "/SavedTemplates.json";
+        TextAsset file = Resources.Load<TextAsset>("SavedTemplates");
 
-        if (File.Exists(defaultPath))
+        if (file != null)
         {
-            LoadFromPath(defaultPath);
+            LoadFromJson(file.text);
         }
-
-        //string persistentPath = Application.persistentDataPath + "/SavedTemplates.json";
-
-        //if (File.Exists(persistentPath))
-        //{
-        //    LoadFromPath(persistentPath);
-        //    return;
-        //}
+        else
+        {
+            Debug.LogError("SavedTemplates not found in Resources");
+        }
     }
 
-    private void LoadFromPath(string path)
+    private void LoadFromJson(string json)
     {
-        var data = JsonUtility.FromJson<GestureTemplates>(File.ReadAllText(path));
+        var data = JsonUtility.FromJson<GestureTemplates>(json);
 
         RawTemplates.Clear();
         RawTemplates.AddRange(data.RawTemplates);
