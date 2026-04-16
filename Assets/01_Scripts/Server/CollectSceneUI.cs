@@ -3,6 +3,12 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
+public enum RecognitionMode
+{
+    DollarOne,
+    MachineLearning
+}
+
 public class CollectSceneUI : MonoBehaviour
 {
     [SerializeField] private Button nextButton;
@@ -12,6 +18,8 @@ public class CollectSceneUI : MonoBehaviour
     [SerializeField] private float minimumScore;
     [SerializeField] private Image image;
     [SerializeField] private TMP_Text score;
+    [SerializeField] private RecognitionMode mode = RecognitionMode.MachineLearning;
+    [SerializeField] private MLModel mlModel;
 
     [SerializeField] private TMP_Text templateNumber;
 
@@ -22,7 +30,7 @@ public class CollectSceneUI : MonoBehaviour
 
     [SerializeField] private CanvasGroup canvasGroup;
 
-    const string APP_VERSION = "1.1";
+    const string APP_VERSION = "1.2";
 
     private string currentLabel = "free draw";
 
@@ -96,9 +104,27 @@ public class CollectSceneUI : MonoBehaviour
         OnSkip?.Invoke(0.0f);
     }
 
-    private float Evaluate(DollarPoint[] points)
+    private float Evaluate(Vector2[] points)
     {
-        return userRecognition.OnDrawFinished(points, currentLabel);
+        switch (mode)
+        {
+            case RecognitionMode.DollarOne:
+                return userRecognition.OnDrawFinished(points, currentLabel);
+
+            case RecognitionMode.MachineLearning:
+                float[] input = Preprocess.Process(ConvertPoints(points));
+
+                var (predicted, confidence) = mlModel.Predict(input);
+
+                Debug.Log("ML Predicted: " + predicted + " (" + confidence + ")");
+
+                if (predicted != currentLabel)
+                    return 0f;
+
+                return confidence;
+        }
+
+        return 0f;
     }
 
     private void UpdateScoreUI(float value)
@@ -116,7 +142,7 @@ public class CollectSceneUI : MonoBehaviour
         return value >= minimumScore;
     }
 
-    private void SendData(DollarPoint[] points)
+    private void SendData(Vector2[] points)
     {
         GestureData data = new GestureData();
 
@@ -127,10 +153,9 @@ public class CollectSceneUI : MonoBehaviour
         data.userId = SystemInfo.deviceUniqueIdentifier;
         data.version = APP_VERSION;
         data.createdAt = DateTime.UtcNow.ToString("o");
+        data.mode = mode.ToString();
 
         string json = JsonUtility.ToJson(data);
-
-        Debug.Log("[SEND] User=" + data.userId + " Version=" + data.version + " Points=" + data.numPoints);
 
         apiClient.SendGesture(json);
     }
@@ -152,13 +177,13 @@ public class CollectSceneUI : MonoBehaviour
             AudioManager.Instance.PlaySound(failClip, 1f, false);
     }
 
-    private Vector2[] ConvertPoints(DollarPoint[] points)
+    private Vector2[] ConvertPoints(Vector2[] points)
     {
         Vector2[] result = new Vector2[points.Length];
 
         for (int i = 0; i < points.Length; i++)
         {
-            result[i] = points[i].Point;
+            result[i] = points[i];
         }
 
         return result;

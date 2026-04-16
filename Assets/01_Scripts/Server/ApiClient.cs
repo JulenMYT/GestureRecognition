@@ -14,6 +14,7 @@ public class GestureData
     public string userId;
     public string createdAt;
     public string version;
+    public string mode;
 }
 
 [Serializable]

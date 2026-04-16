@@ -8,9 +8,9 @@ using UnityEngine;
 public struct GestureTemplate
 {
     public string Name;
-    public DollarPoint[] Points;
+    public Vector2[] Points;
 
-    public GestureTemplate(string templateName, DollarPoint[] preparePoints)
+    public GestureTemplate(string templateName, Vector2[] preparePoints)
     {
         Name = templateName;
         Points = preparePoints;

@@ -17,7 +17,6 @@ public class RecognitionManager : MonoBehaviour
 
     private GestureTemplates _templates => GestureTemplates.Get();
     private static readonly DollarOneRecognizer _dollarOneRecognizer = new DollarOneRecognizer();
-    private IRecognizer _currentRecognizer = _dollarOneRecognizer;
     private RecognizerState _state = RecognizerState.RECOGNITION;
 
     public enum RecognizerState
@@ -26,8 +25,6 @@ public class RecognitionManager : MonoBehaviour
         RECOGNITION,
         TEMPLATE_REVIEW
     }
-
-
 
     private string TemplateName => _templateName.text;
 
@@ -56,18 +53,18 @@ public class RecognitionManager : MonoBehaviour
         _templateReviewPanel?.SetVisibility(state == RecognizerState.TEMPLATE_REVIEW);
     }
 
-    private void OnDrawFinished(DollarPoint[] points)
+    private void OnDrawFinished(Vector2[] points)
     {
         if (_state == RecognizerState.TEMPLATE)
         {
             GestureTemplate preparedTemplate =
-                new GestureTemplate(TemplateName, _currentRecognizer.Normalize(points, 64));
+                new GestureTemplate(TemplateName, _dollarOneRecognizer.Normalize(points, 64));
             _templates.RawTemplates.Add(new GestureTemplate(TemplateName, points));
             _templates.ProceedTemplates.Add(preparedTemplate);
         }
         else
         {
-            (string, float) result = _currentRecognizer.DoRecognition(points, 64, _templates.ProceedTemplates);
+            (string, float) result = _dollarOneRecognizer.DoRecognition(points, 64, _templates.ProceedTemplates);
             string resultText = "";
             resultText = $"Recognized: {result.Item1}, Score: {result.Item2}";
 

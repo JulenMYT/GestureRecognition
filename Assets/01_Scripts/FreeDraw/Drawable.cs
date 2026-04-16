@@ -18,7 +18,7 @@ namespace FreeDraw
     public class Drawable : MonoBehaviour
     {
      
-        public event Action<DollarPoint []> OnDrawFinished;
+        public event Action<Vector2 []> OnDrawFinished;
         
         // PEN COLOUR
         public static Color Pen_Colour = Color.red; // Change these to change the default drawing settings
@@ -103,7 +103,7 @@ namespace FreeDraw
         }
 
 
-        private List<DollarPoint> _drawPoints = new List<DollarPoint>();
+        private List<Vector2> _drawPoints = new List<Vector2>();
 
         // Default brush type. Has width and colour.
         // Pass in a point in WORLD coordinates
@@ -126,7 +126,7 @@ namespace FreeDraw
                 ColourBetween(previous_drag_position, pixel_pos, Pen_Width, Pen_Colour);
             }
 
-            _drawPoints.Add(new DollarPoint(){Point = pixel_pos});
+            _drawPoints.Add(pixel_pos);
 
             ApplyMarkedPixelChanges(drawable_texture, cur_colors);
 

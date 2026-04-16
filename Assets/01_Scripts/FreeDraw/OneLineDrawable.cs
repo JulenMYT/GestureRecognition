@@ -25,7 +25,7 @@ public class OneLineDrawable : MonoBehaviour
     bool mouse_was_previously_held_down = false;
     bool no_drawing_on_current_drag = false;
 
-    List<DollarPoint> _drawPoints = new List<DollarPoint>();
+    List<Vector2> _drawPoints = new List<Vector2>();
 
     void Update()
     {
@@ -109,7 +109,7 @@ public class OneLineDrawable : MonoBehaviour
             ColourBetween(previous_drag_position, pixel_pos, Pen_Width, Pen_Colour);
         }
 
-        _drawPoints.Add(new DollarPoint() { Point = pixel_pos });
+        _drawPoints.Add(pixel_pos);
 
         ApplyMarkedPixelChanges(drawable_texture, cur_colors);
 
@@ -207,7 +207,7 @@ public class OneLineDrawable : MonoBehaviour
         }
     }
 
-    public DollarPoint[] GetDrawPoints()
+    public Vector2[] GetDrawPoints()
     {
         return _drawPoints.ToArray();
     }

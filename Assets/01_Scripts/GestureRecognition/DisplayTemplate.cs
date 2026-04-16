@@ -18,14 +18,14 @@ public class DisplayTemplate : MonoBehaviour
         Clear();
         cur_colors = drawable_texture.GetPixels32();
 
-        DollarPoint[] points = gestureTemplate.Points.Distinct().ToArray();
+        Vector2[] points = gestureTemplate.Points.Distinct().ToArray();
         if (step != DollarOneRecognizer.Step.RAW)
             points = _dollarOneRecognizer.Normalize(gestureTemplate.Points, 64, step);
 
-        float xMin = points.Min(p => p.Point.x);
-        float xMax = points.Max(p => p.Point.x);
-        float yMin = points.Min(p => p.Point.y);
-        float yMax = points.Max(p => p.Point.y);
+        float xMin = points.Min(p => p.x);
+        float xMax = points.Max(p => p.x);
+        float yMin = points.Min(p => p.y);
+        float yMax = points.Max(p => p.y);
 
         Vector2 Remap(Vector2 p)
         {
@@ -37,8 +37,8 @@ public class DisplayTemplate : MonoBehaviour
 
         for (int i = 1; i < points.Length; i++)
         {
-            Vector2 previous = points[i - 1].Point;
-            Vector2 current = points[i].Point;
+            Vector2 previous = points[i - 1];
+            Vector2 current = points[i];
 
             if (step == DollarOneRecognizer.Step.TRANSLATED)
             {
@@ -53,7 +53,7 @@ public class DisplayTemplate : MonoBehaviour
         {
             foreach (var p in points)
             {
-                Vector2 pos = p.Point;
+                Vector2 pos = p;
                 if (step == DollarOneRecognizer.Step.TRANSLATED)
                     pos = Remap(pos);
 
@@ -87,10 +87,10 @@ public class DisplayTemplate : MonoBehaviour
         ApplyMarkedPixelChanges(drawable_texture, cur_colors);
     }
 
-    private Vector2 GetCentroid(DollarPoint[] points)
+    private Vector2 GetCentroid(Vector2[] points)
     {
-        float x = points.Average(p => p.Point.x);
-        float y = points.Average(p => p.Point.y);
+        float x = points.Average(p => p.x);
+        float y = points.Average(p => p.y);
         return new Vector2(x, y);
     }
 
