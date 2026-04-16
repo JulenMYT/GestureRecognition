@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShowEverySymbol : MonoBehaviour
+public class DataCollect : MonoBehaviour
 {
     [SerializeField] private CollectSceneUI collectSceneUI;
     [SerializeField] private DisplayScoreUI displayScoreUI;

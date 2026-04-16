@@ -119,6 +119,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28173944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28173946}
+  - component: {fileID: 28173945}
+  m_Layer: 0
+  m_Name: GestureSender
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &28173945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28173944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c14736cf482b5d4d947c80cf0d9eae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiClient: {fileID: 1570087497}
+--- !u!4 &28173946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28173944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 856.1306, y: 1020.0008, z: -9.958355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &98038199
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,7 +842,7 @@ GameObject:
   - component: {fileID: 375259161}
   - component: {fileID: 375259160}
   m_Layer: 0
-  m_Name: ShowSymbol
+  m_Name: DataCollect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1674,52 +1719,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1233185590
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1233185592}
-  - component: {fileID: 1233185593}
-  m_Layer: 0
-  m_Name: MLSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1233185592
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233185590}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 856.1306, y: 1020.0008, z: -9.958355}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1233185593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233185590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91df8269fc485754ea21476d63e7b378, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modelAsset: {fileID: 5022602860645237092, guid: 9ad892c0d017dad418adbe6ebad06ec5, type: 3}
-  labelsFile: {fileID: 4900000, guid: e54612ca0258a184896121e8b69e3459, type: 3}
 --- !u!1 &1346507748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,17 +1815,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextButton: {fileID: 1188055085}
   skipButton: {fileID: 322740633}
-  apiClient: {fileID: 1570087497}
-  userRecognition: {fileID: 1974449226}
-  minimumScore: 80
+  recognitionService: {fileID: 1974449230}
+  gestureSender: {fileID: 28173945}
   image: {fileID: 386969950}
   score: {fileID: 1375647949}
-  mode: 0
-  mlModel: {fileID: 1233185593}
   templateNumber: {fileID: 845122523}
+  canvasGroup: {fileID: 1346507753}
   successClip: {fileID: 8300000, guid: 6ef0305164ab5834d9fc5bb93e4e09a8, type: 3}
   failClip: {fileID: 8300000, guid: 4fe10e921575aca4aaa10978247d46c3, type: 3}
-  canvasGroup: {fileID: 1346507753}
+  minimumScore: 80
 --- !u!225 &1346507753
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2390,9 +2387,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1974449227}
+  - component: {fileID: 1974449230}
   - component: {fileID: 1974449226}
+  - component: {fileID: 1974449229}
   m_Layer: 0
-  m_Name: RecognitionManager
+  m_Name: Recognition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2426,6 +2425,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1974449229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974449225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91df8269fc485754ea21476d63e7b378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelAsset: {fileID: 5022602860645237092, guid: 9ad892c0d017dad418adbe6ebad06ec5, type: 3}
+  labelsFile: {fileID: 4900000, guid: e54612ca0258a184896121e8b69e3459, type: 3}
+--- !u!114 &1974449230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974449225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e46261f04576b7b40ab629e7ab2bac18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userRecognition: {fileID: 1974449226}
+  mlModel: {fileID: 1974449229}
+  mode: 0
 --- !u!1 &2040928472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,4 +2725,4 @@ SceneRoots:
   - {fileID: 1570087498}
   - {fileID: 1974449227}
   - {fileID: 375259161}
-  - {fileID: 1233185592}
+  - {fileID: 28173946}
